@@ -1,0 +1,20 @@
+export,message_id,high,rule
+messages_sample.csv,M389aa7bf,false,refund not arrived yet
+messages_sample.csv,M17ffab0c,false,delayed parcel
+messages_sample.csv,M3945444c,true,delivered to a different address
+messages_sample.csv,Mec541a3e,false,higher price shown at checkout
+messages_sample.csv,M64ef1237,false,refund not arrived yet
+messages_sample.csv,M3c3acd5f,false,refund not arrived yet
+messages_sample.csv,M05b1b477,false,refund not arrived yet
+messages_sample.csv,Mf3b40c1f,true,delivered to a different address
+messages_sample.csv,M03fd0d0b,false,failed payment / money may be held
+messages_sample.csv,M6bd561d3,false,refund not arrived yet
+messages_sample.csv,M7a1a4c16,false,unsure whether payment went through
+messages_sample.csv,M61852ecf,true,delivered to a different address
+messages_sample.csv,M1a2e93f3,true,delivered to a different address
+eval_messages.csv,Meba00d31,true,delivered to the wrong address
+eval_messages.csv,Ma657ee7c,false,higher price shown at checkout
+eval_messages.csv,Maa9fa5d0,false,higher price shown at checkout
+eval_messages.csv,M3f3eac9c,false,delayed parcel + wants refund
+eval_messages.csv,M22100105,false,refund not arrived yet
+messages_sample.csv,Me55ffcac,false,failed delivery attempt (courier marked unavailable)

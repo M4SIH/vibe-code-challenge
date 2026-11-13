@@ -1,0 +1,24 @@
+# Secrets
+.env
+
+# Local AI-tool state (not part of the submission)
+.claude/
+.claude-flow/
+.swarm/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+
+# LLM response cache: ignore all but the final classification cache (hashed keys + labels only,
+# no customer text), which ships so results reproduce without an API key.
+backend/.cache/*
+!backend/.cache/classify-v3.json
+
+# Submission archive
+*.zip
+
+# macOS
+.DS_Store

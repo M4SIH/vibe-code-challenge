@@ -1,26 +1,26 @@
 import { CATEGORIES, type Category } from '../types';
-import { formatCategory } from '../format';
+import { faNumber, formatCategory, formatPercent } from '../format';
 
 interface Props {
-  counts: Record<Category, number>;
+  counts: Partial<Record<Category, number>>;
   total: number;
 }
 
 export default function CategoryBreakdown({ counts, total }: Props) {
   return (
-    <section className="card">
-      <h2>Categories</h2>
+    <section className="card" aria-labelledby="categories-title">
+      <h2 id="categories-title">مشتریان با چه مشکلی درگیرند؟</h2>
+      <p className="muted">بر اساس پیام‌های یکتا (پیام‌های تکراری یک بار شمرده می‌شوند).</p>
       <ul className="breakdown">
         {CATEGORIES.map((cat) => {
-          const pct = (counts[cat] / total * 100).toFixed(1);
+          const n = counts[cat] ?? 0; // a missing category is 0, never NaN
+          const width = total > 0 ? (n / total) * 100 : 0;
           return (
             <li key={cat}>
               <span className="cat-name">{formatCategory(cat)}</span>
-              <span className="bar">
-                <span className="bar-fill" style={{ width: `${pct}%` }} />
-              </span>
-              <span className="cat-count">{counts[cat].toLocaleString()}</span>
-              <span className="cat-pct">{pct}%</span>
+              <span className="bar"><span className="bar-fill" style={{ width: `${width}%` }} /></span>
+              <span className="cat-count">{faNumber(n)}</span>
+              <span className="cat-pct">{formatPercent(n, total)}</span>
             </li>
           );
         })}

@@ -1,0 +1,32 @@
+{
+ "capturedAt": "2026-11-13T18:35:40.619Z",
+ "sessionId": "local_b08dd2b3-e9df-4b9e-816e-74a9212968e4",
+ "cliSessionId": "006dd141-2302-4ad9-8056-96cb0af9a9f1",
+ "sidebarShownState": "running",
+ "isRunning": true,
+ "hasPendingPermission": false,
+ "hasLiveWorkflows": false,
+ "hasBackgroundWork": false,
+ "wakesSoon": false,
+ "hasBackgroundActivity": false,
+ "activeBackgroundTasks": null,
+ "pendingEchoUuids": null,
+ "pendingEchoAgesMs": null,
+ "awaitingTurnResult": null,
+ "awaitingTurnResultAgeMs": null,
+ "cliLastTurnMessageWasResult": false,
+ "cliAtTurnBoundaryHint": false,
+ "interruptResultPendingSince": null,
+ "interruptResultPendingCycleArmed": null,
+ "cliProvablyIdle": false,
+ "inputStreamHasPending": false,
+ "nextCycleUuid": null,
+ "hasPendingCycle": true,
+ "pendingCycleUserMessageUuid": "398395ca-4a48-450e-9840-5ec3baf9f53d",
+ "deferredSendUuids": null,
+ "heldSteersUuids": null,
+ "toolMayBeRunning": true,
+ "declaredToolCallIds": [
+  "toolu_01AkgGzamgHXZi7jiQYAXRXb"
+ ]
+}

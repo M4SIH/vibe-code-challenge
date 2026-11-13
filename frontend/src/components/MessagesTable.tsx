@@ -1,39 +1,64 @@
-import type { Message } from '../types';
-import { formatCategory, formatDate } from '../format';
+import { useMemo, useState } from 'react';
+import { faNumber, formatCategory, formatDate } from '../format';
+import { CATEGORIES, type Message } from '../types';
+import OrderText from './OrderText';
 
 const MAX_ROWS = 200;
 
-function highlightOrders(text: string): string {
-  return text.replace(/BZ-[0-9]+/g, (id) => `<mark class="order-ref">${id}</mark>`);
-}
-
 export default function MessagesTable({ messages }: { messages: Message[] }) {
-  const rows = messages.slice(0, MAX_ROWS);
+  const [category, setCategory] = useState<string>('');
+  const [query, setQuery] = useState('');
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return messages.filter((m) =>
+      (!category || m.category === category)
+      && (!q || `${m.message_id} ${m.order_ref ?? ''} ${m.subject} ${m.body}`.toLowerCase().includes(q)));
+  }, [messages, category, query]);
+  const rows = filtered.slice(0, MAX_ROWS);
+
   return (
-    <section className="card">
-      <h2>Messages</h2>
-      {messages.length > MAX_ROWS && (
-        <p className="muted">Showing first {MAX_ROWS} of {messages.length.toLocaleString()}.</p>
+    <section className="card" aria-labelledby="messages-title">
+      <h2 id="messages-title">همهٔ پیام‌ها</h2>
+      <div className="filters">
+        <label>
+          دسته
+          <select value={category} onChange={(e) => setCategory(e.target.value)}>
+            <option value="">همه</option>
+            {CATEGORIES.map((c) => <option key={c} value={c}>{formatCategory(c)}</option>)}
+          </select>
+        </label>
+        <label>
+          جستجو
+          <input type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="شناسه، سفارش یا متن" />
+        </label>
+      </div>
+      {filtered.length > MAX_ROWS && (
+        <p className="muted">نمایش {faNumber(MAX_ROWS)} پیام از {faNumber(filtered.length)}.</p>
       )}
       <div className="table-wrap">
         <table>
           <thead>
             <tr>
-              <th>ID</th><th>Category</th><th>Urgent</th><th>Order</th>
-              <th>Channel</th><th>Received</th><th>Subject</th><th>Body</th>
+              <th>شناسه</th><th>دسته</th><th>جدی</th><th>فوری</th><th>سفارش</th>
+              <th>کانال</th><th>دریافت</th><th>موضوع</th><th>متن</th>
             </tr>
           </thead>
           <tbody>
             {rows.map((m) => (
-              <tr key={m.message_id}>
-                <td>{m.message_id}</td>
+              <tr key={m.message_id} className={m.duplicate_of ? 'resend' : undefined}>
+                <td dir="ltr">
+                  {m.message_id}
+                  {m.duplicate_of && <div className="muted small">تکرارِ <span dir="ltr">{m.duplicate_of}</span></div>}
+                </td>
                 <td>{formatCategory(m.category)}</td>
-                <td>{m.is_urgent ? 'Yes' : ''}</td>
-                <td>{m.order_ref ?? '-'}</td>
-                <td>{m.channel}</td>
+                <td>{m.severity === 'high' ? 'بله' : ''}</td>
+                <td>{m.is_urgent ? 'بله' : ''}</td>
+                <td dir="ltr">{m.order_ref ?? '—'}</td>
+                <td dir="ltr">{m.channel || '—'}</td>
                 <td>{formatDate(m.received_at)}</td>
                 <td dir="auto">{m.subject}</td>
-                <td dir="auto" className="body-cell" dangerouslySetInnerHTML={{ __html: highlightOrders(m.body) }} />
+                <td dir="auto" className="body-cell"><OrderText text={m.body} /></td>
               </tr>
             ))}
           </tbody>

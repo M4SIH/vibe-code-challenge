@@ -15,9 +15,11 @@ does not work.",,low
 
 
 @pytest.fixture(autouse=True)
-def _no_llm(monkeypatch: pytest.MonkeyPatch) -> None:
+def _no_llm(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
     monkeypatch.delenv("LLM_BASE_URL", raising=False)
     monkeypatch.setenv("URGENT_SLA_BUSINESS_HOURS", "2")
+    # hermetic: never read the real LLM cache in backend/.cache
+    monkeypatch.setenv("LLM_CACHE_DIR", str(tmp_path / "llm-cache"))
 
 
 @pytest.fixture
